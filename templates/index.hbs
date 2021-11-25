@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <!-- Primary Meta Tags -->
+    <title>{{title}}</title>
+    <meta name="author" content="{{author}}">
+    <meta name="description" content="{{title}}">
+    <meta name="theme-color" content="#FF0000">
+    <link rel="copyright" href="copyright.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:description" content="{{description}}">
+    <meta property="og:image" content="{{url}}/meta-image.png">
+    <meta property="og:title" content="{{title}}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{url}}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:description" content="{{description}}">
+    <meta property="twitter:image" content="{{url}}/meta-image.png">
+    <meta property="twitter:title" content="{{title}}">
+    <meta property="twitter:url" content="{{url}}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name='robots' content='noindex,follow' />
+
+    <link type="text/plain" rel="author" href="humans.txt">
+
+    <link rel="stylesheet" href="https://unpkg.com/@csstools/normalize.css" />
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<header>
+    {{title}}
+</header>
+
+<body>
+    <main id="content">
+        <article>
+            <h1>Test</h1>
+            {{> page}}
+        </article>
+    </main>
+</body>
+
+</html>
