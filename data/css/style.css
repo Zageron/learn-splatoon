@@ -1,0 +1,9 @@
+a {
+    color: white;
+    text-decoration: none;
+    cursor: text;
+}
+
+footer {
+    visibility: collapse;
+}

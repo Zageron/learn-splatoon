@@ -1,0 +1,42 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'learn-splatoon'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=learn-splatoon",
+                    "--package=learn-splatoon"
+                ],
+                "filter": {
+                    "name": "learn-splatoon",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}/data"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'learn-splatoon'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=learn-splatoon",
+                    "--package=learn-splatoon"
+                ],
+                "filter": {
+                    "name": "learn-splatoon",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}/data"
+        }
+    ]
+}
