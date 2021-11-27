@@ -9,7 +9,8 @@
     <meta name="author" content="{{author}}">
     <meta name="description" content="{{title}}">
     <meta name="theme-color" content="#FF0000">
-    <link rel="copyright" href="copyright.html">
+    <link rel="copyright" href="copyright">
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:description" content="{{description}}">
@@ -25,27 +26,17 @@
     <meta property="twitter:title" content="{{title}}">
     <meta property="twitter:url" content="{{url}}">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Indexing -->
     <meta name='robots' content='noindex,follow' />
-
     <link type="text/plain" rel="author" href="humans.txt">
 
+    <!-- Styling -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/@csstools/normalize.css" />
     <link rel="stylesheet" href="css/style.css">
 
 </head>
 
-<header>
-    {{title}}
-</header>
-
-<body>
-    <main id="content">
-        <article>
-            <h1>Test</h1>
-            {{> page}}
-        </article>
-    </main>
-</body>
+{{> page}}
 
 </html>

@@ -1,0 +1,20 @@
+{{#*inline "page"}}
+
+<body>
+    <p>Rendered in partial DEBUGGING, parent is {{parent}}. Welcome {{id}}.</p>
+    <form method="post" action="login">
+        <input type="text" name="username" id="username" />
+        <button type="submit" name="login" value="submit_value">
+            Login
+        </button>
+    </form>
+
+    <form method="post" action="logout">
+        <button type="submit" name="logout" value="submit_value">
+            Logout
+        </button>
+    </form>
+</body>
+
+{{/inline}}
+{{> (lookup this "parent")}}
