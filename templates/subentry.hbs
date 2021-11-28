@@ -1,19 +1,28 @@
 {{#*inline "page"}}
 
 <body>
-    <p>Rendered in partial DEBUGGING, parent is {{parent}}. Welcome {{id}}.</p>
-    <form method="post" action="login">
-        <input type="text" name="username" id="username" />
-        <button type="submit" name="login" value="submit_value">
-            Login
-        </button>
-    </form>
+    <div class="container">
+        <h1>Rendered in partial DEBUGGING, parent is {{parent}}.</h1>
+        <h2>Welcome {{id}}</h2>
+        <div class="container-sm">
+            <form method="post" action="login">
+                <div class="mb-3">
+                    <input type="text" name="username" id="username" class="form-control" />
+                    <button type="submit" name="login" value="submit_value" class="btn btn-outline-warning">
+                        Login
+                    </button>
+                </div>
+            </form>
 
-    <form method="post" action="logout">
-        <button type="submit" name="logout" value="submit_value">
-            Logout
-        </button>
-    </form>
+            <form method="post" action="logout">
+                <div class="mb-3">
+                    <button type="submit" name="logout" value="submit_value" class="btn btn-outline-warning">
+                        Logout
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 
 {{/inline}}
