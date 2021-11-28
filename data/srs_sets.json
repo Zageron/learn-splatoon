@@ -1,0 +1,189 @@
+[
+    {
+        "category": "blasters",
+        "callouts": [
+            "Shooter_BlasterLightLong_00",
+            "Shooter_BlasterLightLong_01",
+            "Shooter_BlasterLightShort_00",
+            "Shooter_BlasterLightShort_01",
+            "Shooter_BlasterLight_00",
+            "Shooter_BlasterLight_01",
+            "Shooter_BlasterLight_02",
+            "Shooter_BlasterLong_00",
+            "Shooter_BlasterLong_01",
+            "Shooter_BlasterLong_02",
+            "Shooter_BlasterMiddle_00",
+            "Shooter_BlasterMiddle_01",
+            "Shooter_BlasterMiddle_H",
+            "Shooter_BlasterShort_00",
+            "Shooter_BlasterShort_01",
+            "Shooter_BlasterShort_02"
+        ]
+    },
+    {
+        "category": "brellas",
+        "callouts": [
+            "Umbrella_Compact_00",
+            "Umbrella_Compact_01",
+            "Umbrella_Compact_02",
+            "Umbrella_CoopAutoAssault",
+            "Umbrella_Normal_00",
+            "Umbrella_Normal_01",
+            "Umbrella_Normal_H",
+            "Umbrella_Wide_00",
+            "Umbrella_Wide_01",
+            "Umbrella_Wide_02"
+        ]
+    },
+    {
+        "category": "brushes",
+        "callouts": [
+            "Roller_BrushNormal_H",
+            "Roller_BrushNormal_00",
+            "Roller_BrushNormal_01",
+            "Roller_BrushNormal_02",
+            "Roller_BrushMini_00",
+            "Roller_BrushMini_01",
+            "Roller_BrushMini_02"
+        ]
+    },
+    {
+        "category": "chargers",
+        "callouts": [
+            "Charger_CoopSpark",
+            "Charger_Keeper_00",
+            "Charger_Keeper_01",
+            "Charger_Light_00",
+            "Charger_Light_01",
+            "Charger_Light_02",
+            "Charger_LongScope_00",
+            "Charger_LongScope_01",
+            "Charger_Long_00",
+            "Charger_Long_01",
+            "Charger_NormalScope_00",
+            "Charger_NormalScope_01",
+            "Charger_NormalScope_02",
+            "Charger_Normal_00",
+            "Charger_Normal_01",
+            "Charger_Normal_02",
+            "Charger_Normal_H",
+            "Charger_Quick_00",
+            "Charger_Quick_01",
+            "Charger_Quick_02"
+        ]
+    },
+    {
+        "category": "dualies",
+        "callouts": [
+            "Twins_Dual_00",
+            "Twins_Dual_01",
+            "Twins_Gallon_00",
+            "Twins_Gallon_01",
+            "Twins_Gallon_02",
+            "Twins_Normal_00",
+            "Twins_Normal_01",
+            "Twins_Normal_02",
+            "Twins_Normal_H",
+            "Twins_Short_00",
+            "Twins_Short_01",
+            "Twins_Short_02",
+            "Twins_Stepper_00",
+            "Twins_Stepper_01"
+        ]
+    },
+    {
+        "category": "rollers",
+        "callouts": [
+            "Roller_Compact_00",
+            "Roller_Compact_01",
+            "Roller_Heavy_00",
+            "Roller_Heavy_01",
+            "Roller_Heavy_02",
+            "Roller_Hunter_00",
+            "Roller_Hunter_01",
+            "Roller_Normal_00",
+            "Roller_Normal_01",
+            "Roller_Normal_02",
+            "Roller_Normal_H"
+        ]
+    },
+    {
+        "category": "shooters",
+        "callouts": [
+            "Shooter_Blaze_00",
+            "Shooter_Blaze_01",
+            "Shooter_Blaze_02",
+            "Shooter_Expert_00",
+            "Shooter_Expert_01",
+            "Shooter_Expert_02",
+            "Shooter_First_00",
+            "Shooter_First_01",
+            "Shooter_First_02",
+            "Shooter_Flash_00",
+            "Shooter_Flash_01",
+            "Shooter_Gravity_00",
+            "Shooter_Gravity_01",
+            "Shooter_Gravity_02",
+            "Shooter_Heavy_00",
+            "Shooter_Heavy_01",
+            "Shooter_Long_00",
+            "Shooter_Long_01",
+            "Shooter_Normal_00",
+            "Shooter_Normal_01",
+            "Shooter_Normal_02",
+            "Shooter_Normal_H",
+            "Shooter_Normal_Oct",
+            "Shooter_Precision_00",
+            "Shooter_Precision_01",
+            "Shooter_QuickMiddle_00",
+            "Shooter_QuickMiddle_01",
+            "Shooter_QuickMiddle_02",
+            "Shooter_Short_00",
+            "Shooter_Short_01",
+            "Shooter_Short_02",
+            "Shooter_TripleMiddle_00",
+            "Shooter_TripleMiddle_01",
+            "Shooter_TripleMiddle_02",
+            "Shooter_TripleQuick_00",
+            "Shooter_TripleQuick_01",
+            "Shooter_TripleQuick_02"
+        ]
+    },
+    {
+        "category": "sloshers",
+        "callouts": [
+            "Slosher_Bathtub_00",
+            "Slosher_Bathtub_01",
+            "Slosher_CoopVase",
+            "Slosher_Diffusion_00",
+            "Slosher_Diffusion_01",
+            "Slosher_Launcher_00",
+            "Slosher_Launcher_01",
+            "Slosher_Launcher_02",
+            "Slosher_Strong_00",
+            "Slosher_Strong_01",
+            "Slosher_Strong_02",
+            "Slosher_Strong_H",
+            "Slosher_Washtub_00",
+            "Slosher_Washtub_01"
+        ]
+    },
+    {
+        "category": "splatlings",
+        "callouts": [
+            "Spinner_Downpour_00",
+            "Spinner_Downpour_01",
+            "Spinner_Hyper_00",
+            "Spinner_Hyper_01",
+            "Spinner_Quick_00",
+            "Spinner_Quick_01",
+            "Spinner_Quick_02",
+            "Spinner_Serein_00",
+            "Spinner_Serein_01",
+            "Spinner_Standard_00",
+            "Spinner_Standard_01",
+            "Spinner_Standard_02",
+            "Spinner_Standard_H"
+        ]
+    }
+]
