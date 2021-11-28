@@ -14,9 +14,6 @@ use actix_web::{dev, get, http, post, web, App, HttpResponse, HttpServer, Result
 
 use handlebars::Handlebars;
 
-use rand::thread_rng;
-use rand::Rng;
-
 use serde::Deserialize;
 use serde::Serialize;
 use std::collections::HashMap;
@@ -185,9 +182,6 @@ fn not_found<B>(mut res: dev::ServiceResponse<B>) -> Result<ErrorHandlerResponse
 
 #[cfg(test)]
 mod tests {
-    use rand::thread_rng;
-    use rand::Rng;
-
     use crate::read_language_file;
     use crate::read_mains_file;
     use crate::MainWeapons;
@@ -208,11 +202,8 @@ mod tests {
         let english_lang = read_language_file("./data/splatoon/english.json").unwrap();
         let main_weapons = read_mains_file("./data/splatoon/mains.json").unwrap();
 
-        let mut rng = thread_rng();
-        let i: usize = rng.gen_range(0..main_weapons.len());
-
-        let main: &MainWeapons = &main_weapons[i];
+        let main: &MainWeapons = &main_weapons[0];
         let name: &String = &english_lang.inner[&main.name];
-        println!("{} -- {:?}", name, main);
+        assert_eq!(name, "Sploosh-o-matic");
     }
 }
