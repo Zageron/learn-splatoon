@@ -14,6 +14,7 @@ use actix_web::{dev, get, http, post, web, App, HttpResponse, HttpServer, Result
 
 use handlebars::Handlebars;
 
+use mongodb::bson::doc;
 use serde::Deserialize;
 use serde::Serialize;
 use std::collections::HashMap;
@@ -22,6 +23,9 @@ use std::fs::File;
 use std::io;
 use std::io::BufReader;
 use std::path::Path;
+
+mod database;
+use database::connect;
 
 // Macro documentation can be found in the actix_web_codegen crate
 #[get("/")]
