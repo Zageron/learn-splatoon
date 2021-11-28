@@ -197,6 +197,11 @@ mod tests {
     }
 
     #[test]
+    fn callouts_exists() {
+        assert!(read_language_file("./data/splatoon/english_gear_callouts.json").is_ok());
+    }
+
+    #[test]
     fn test_langauge_lookup() {
         // Testing out splatoon weaponry stuff.
         let english_lang = read_language_file("./data/splatoon/english.json").unwrap();
