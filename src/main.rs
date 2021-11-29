@@ -4,8 +4,13 @@ extern crate env_logger;
 extern crate maplit;
 
 use actix_files::Files;
+use actix_http::body::AnyBody;
+use actix_http::body::Body;
+use actix_http::Response;
+use actix_web::dev::ServiceResponse;
 use actix_web::http::header;
 use actix_web::http::StatusCode;
+use actix_web::middleware;
 use actix_web::middleware::Logger;
 use actix_web::middleware::{ErrorHandlerResponse, ErrorHandlers};
 use actix_web::web::Bytes;
@@ -17,6 +22,7 @@ use handlebars::Handlebars;
 use mongodb::bson::doc;
 use serde::Deserialize;
 use serde::Serialize;
+use serde_json::json;
 use std::collections::HashMap;
 use std::error::Error;
 use std::fs::File;
@@ -154,34 +160,77 @@ async fn main() -> io::Result<()> {
         .unwrap();
     let handlebars_ref = web::Data::new(handlebars);
 
-    HttpServer::new(move || {
-        App::new()
-            .wrap(ErrorHandlers::new().handler(StatusCode::NOT_FOUND, not_found))
-            .wrap(Logger::default())
-            .app_data(handlebars_ref.clone())
-            .service(
-                web::scope("/srs")
-                    .service(srs)
-                    .service(srs_entry)
-                    .service(srs_submit),
-            )
-            .service(index)
-            .service(copyright)
-            .service(robots)
-            .service(Files::new("/", "./data/web"))
-    })
-    .bind("127.0.0.1:8081")?
-    .run()
-    .await
+    let connection = connect().await;
+    if connection.is_ok() {
+        HttpServer::new(move || {
+            App::new()
+                .wrap(middleware::NormalizePath::default())
+                .wrap(error_handlers())
+                .wrap(Logger::default())
+                .app_data(handlebars_ref.clone())
+                .service(
+                    web::scope("/srs")
+                        .service(srs)
+                        .service(srs_entry)
+                        .service(srs_submit),
+                )
+                .service(index)
+                .service(copyright)
+                .service(robots)
+            //.service(Files::new("/", "./data/web"))
+        })
+        .bind("127.0.0.1:8081")?
+        .run()
+        .await
+    } else {
+        Ok(())
+    }
+}
+
+// Custom error handlers, to return HTML responses when an error occurs.
+fn error_handlers() -> ErrorHandlers<AnyBody> {
+    ErrorHandlers::new().handler(StatusCode::NOT_FOUND, not_found)
 }
 
 // Error handler for a 404 Page not found error.
-fn not_found<B>(mut res: dev::ServiceResponse<B>) -> Result<ErrorHandlerResponse<B>> {
-    res.response_mut().headers_mut().insert(
-        http::header::CONTENT_TYPE,
-        http::HeaderValue::from_static("Error"),
-    );
-    Ok(ErrorHandlerResponse::Response(res))
+fn not_found<B>(res: ServiceResponse<B>) -> Result<ErrorHandlerResponse<AnyBody>> {
+    let response = get_error_response(&res, "Page not found");
+    Ok(ErrorHandlerResponse::Response(res.into_response(response)))
+}
+
+// Generic error handler.
+fn get_error_response<B>(res: &ServiceResponse<B>, error: &str) -> HttpResponse<AnyBody> {
+    let request = res.request();
+
+    // Provide a fallback to a simple plain text response in case an error occurs during the
+    // rendering of the error page.
+    let fallback = |e: &str| {
+        HttpResponse::build(res.status())
+            .content_type("text/plain")
+            .body(e.to_string())
+    };
+
+    let hb = request
+        .app_data::<web::Data<Handlebars>>()
+        .map(|t| t.get_ref());
+    match hb {
+        Some(hb) => {
+            let data = json!({
+                "error": error,
+                "status_code": res.status().as_str(),
+                "page": request.uri().to_string()
+            });
+            let body = hb.render("404", &data);
+
+            match body {
+                Ok(body) => HttpResponse::build(res.status())
+                    .content_type("text/html")
+                    .body(body),
+                Err(_) => fallback(error),
+            }
+        }
+        None => fallback(error),
+    }
 }
 
 #[cfg(test)]
