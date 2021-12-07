@@ -24,6 +24,38 @@
             ],
             "group": "build",
             "label": "rust: cargo build release"
+        },
+        {
+            "label": "Ory Proxy",
+            "type": "shell",
+            "isBackground": true,
+            "command": "ory",
+            "args": [
+                "proxy",
+                "http://localhost",
+                "--sdk-url",
+                "https://gallant-leakey-n498g2rdpa.projects.oryapis.com"
+            ],
+            // This task is run before some debug tasks.
+            // Problem is, it's a watch script, and since it never exits, VSCode
+            // complains. All this is needed so VSCode just lets it run.
+            "problemMatcher": [
+                {
+                    "pattern": [
+                        {
+                            "regexp": ".",
+                            "file": 1,
+                            "location": 2,
+                            "message": 3
+                        }
+                    ],
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": ".",
+                        "endsPattern": ".",
+                    }
+                }
+            ]
         }
     ]
 }

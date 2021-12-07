@@ -17,7 +17,8 @@
                 }
             },
             "args": [],
-            "cwd": "${workspaceFolder}"
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Ory Proxy"
         },
         {
             "type": "lldb",
@@ -36,7 +37,8 @@
                 }
             },
             "args": [],
-            "cwd": "${workspaceFolder}"
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Ory Proxy"
         }
     ]
 }

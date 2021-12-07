@@ -3,6 +3,10 @@ extern crate env_logger;
 #[macro_use]
 extern crate maplit;
 
+extern crate dotenv;
+
+use dotenv::dotenv;
+
 use actix_files::Files;
 use actix_http::body::AnyBody;
 use actix_http::body::Body;
@@ -12,11 +16,13 @@ use actix_web::http::header;
 use actix_web::http::StatusCode;
 use actix_web::middleware;
 use actix_web::middleware::Logger;
+use actix_web::middleware::TrailingSlash;
 use actix_web::middleware::{ErrorHandlerResponse, ErrorHandlers};
 use actix_web::web::Bytes;
 use actix_web::HttpRequest;
 use actix_web::{dev, get, http, post, web, App, HttpResponse, HttpServer, Result};
 
+use futures_util::Future;
 use handlebars::Handlebars;
 
 use mongodb::bson::doc;
@@ -32,6 +38,9 @@ use std::path::Path;
 
 mod database;
 use database::connect;
+
+use ory_kratos_client::apis::configuration::Configuration as KratosConfiguration;
+mod authenticate;
 
 // Macro documentation can be found in the actix_web_codegen crate
 #[get("/")]
@@ -146,6 +155,8 @@ fn read_mains_file<P: AsRef<Path>>(path: P) -> Result<Vec<MainWeapons>, Box<dyn 
 
 #[actix_web::main]
 async fn main() -> io::Result<()> {
+    dotenv().ok();
+
     #[cfg(debug_assertions)]
     std::env::set_var("RUST_LOG", "actix_web=info");
     #[cfg(debug_assertions)]
@@ -160,31 +171,39 @@ async fn main() -> io::Result<()> {
         .unwrap();
     let handlebars_ref = web::Data::new(handlebars);
 
-    let connection = connect().await;
-    if connection.is_ok() {
-        HttpServer::new(move || {
-            App::new()
-                .wrap(middleware::NormalizePath::default())
-                .wrap(error_handlers())
-                .wrap(Logger::default())
-                .app_data(handlebars_ref.clone())
-                .service(
-                    web::scope("/srs")
-                        .service(srs)
-                        .service(srs_entry)
-                        .service(srs_submit),
-                )
-                .service(index)
-                .service(copyright)
-                .service(robots)
-            //.service(Files::new("/", "./data/web"))
-        })
-        .bind("127.0.0.1:8081")?
-        .run()
-        .await
-    } else {
-        Ok(())
-    }
+    let base_path = std::env::var("ORY_SDK_URL").expect("ORY_SDK_URL is not set.");
+
+    //let connection = connect().await;
+    //if connection.is_ok() {
+    HttpServer::new(move || {
+        App::new()
+            .wrap(authenticate::KratosIdentity {
+                configuration: KratosConfiguration {
+                    base_path: base_path.clone(),
+                    ..Default::default()
+                },
+            })
+            .wrap(middleware::NormalizePath::new(TrailingSlash::Trim))
+            .wrap(error_handlers())
+            .wrap(Logger::default())
+            .app_data(handlebars_ref.clone())
+            .service(
+                web::scope("/srs")
+                    .service(srs)
+                    .service(srs_entry)
+                    .service(srs_submit),
+            )
+            .service(index)
+            .service(copyright)
+            .service(robots)
+        //.service(Files::new("/", "./data/web"))
+    })
+    .bind("0.0.0.0:8081")?
+    .run()
+    .await
+    //} else {
+    //  Ok(())
+    //}//
 }
 
 // Custom error handlers, to return HTML responses when an error occurs.
