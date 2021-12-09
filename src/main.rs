@@ -9,8 +9,6 @@ use dotenv::dotenv;
 
 use actix_files::Files;
 use actix_http::body::AnyBody;
-use actix_http::body::Body;
-use actix_http::Response;
 use actix_web::dev::ServiceResponse;
 use actix_web::http::header;
 use actix_web::http::StatusCode;
@@ -20,9 +18,8 @@ use actix_web::middleware::TrailingSlash;
 use actix_web::middleware::{ErrorHandlerResponse, ErrorHandlers};
 use actix_web::web::Bytes;
 use actix_web::HttpRequest;
-use actix_web::{dev, get, http, post, web, App, HttpResponse, HttpServer, Result};
+use actix_web::{get, post, web, App, HttpResponse, HttpServer, Result};
 
-use futures_util::Future;
 use handlebars::Handlebars;
 
 use mongodb::bson::doc;
@@ -72,8 +69,8 @@ async fn srs(_hb: web::Data<Handlebars<'_>>) -> HttpResponse {
 
 #[get("/{entry_id}")]
 async fn srs_entry(_hb: web::Data<Handlebars<'_>>, info: web::Path<Info>) -> HttpResponse {
+    println!("Entry {:?}", info.entry_id);
     HttpResponse::Ok().body(format!("{:?}", info))
-    //HttpResponse::Ok().body("You need to pick an entry to study.")
 }
 
 #[post("/{entry_id}")]
@@ -173,10 +170,13 @@ async fn main() -> io::Result<()> {
 
     let base_path = std::env::var("ORY_SDK_URL").expect("ORY_SDK_URL is not set.");
 
-    //let connection = connect().await;
-    //if connection.is_ok() {
+    let connection_result = connect().await;
+    let connection = connection_result.is_ok();
+
     HttpServer::new(move || {
         App::new()
+            .app_data(handlebars_ref.clone())
+            .app_data(connection)
             .wrap(authenticate::KratosIdentity {
                 configuration: KratosConfiguration {
                     base_path: base_path.clone(),
@@ -186,7 +186,6 @@ async fn main() -> io::Result<()> {
             .wrap(middleware::NormalizePath::new(TrailingSlash::Trim))
             .wrap(error_handlers())
             .wrap(Logger::default())
-            .app_data(handlebars_ref.clone())
             .service(
                 web::scope("/srs")
                     .service(srs)
@@ -196,14 +195,11 @@ async fn main() -> io::Result<()> {
             .service(index)
             .service(copyright)
             .service(robots)
-        //.service(Files::new("/", "./data/web"))
+            .service(Files::new("/", "./data/web"))
     })
     .bind("0.0.0.0:8081")?
     .run()
     .await
-    //} else {
-    //  Ok(())
-    //}//
 }
 
 // Custom error handlers, to return HTML responses when an error occurs.

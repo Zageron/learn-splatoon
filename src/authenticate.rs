@@ -23,12 +23,6 @@ pub struct KratosIdentity {
     pub configuration: KratosConfiguration,
 }
 
-impl KratosIdentity {
-    pub fn new(configuration: KratosConfiguration) -> Self {
-        Self { configuration }
-    }
-}
-
 impl<S, B> Transform<S, ServiceRequest> for KratosIdentity
 where
     S: Service<ServiceRequest, Response = ServiceResponse<B>, Error = Error> + 'static,
