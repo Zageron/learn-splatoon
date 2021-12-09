@@ -19,9 +19,9 @@ futures-util = "0.3.18"
 handlebars = { version = "4.1.6", features = ["dir_source"] }
 maplit = "1.0.2"
 mime = "0.3.16"
-mongodb = "2.1.0-beta"
+mongodb = { branch = "master", git = "https://github.com/mongodb/mongo-rust-driver.git" }
 ory-kratos-client = "0.7.6-alpha.7"
 pin-project = "1.0.8"
 rand = "0.8.4"
-serde = { version = "1.0.130", features = ["derive"] }
+serde = { version = "1.0.131", features = ["derive"] }
 serde_json = "1.0.72"
