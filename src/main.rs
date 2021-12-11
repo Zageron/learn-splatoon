@@ -176,7 +176,7 @@ async fn main() -> io::Result<()> {
     HttpServer::new(move || {
         App::new()
             .app_data(handlebars_ref.clone())
-            .app_data(connection)
+            .app_data(web::Data::new(connection_result.clone()))
             .wrap(authenticate::KratosIdentity {
                 configuration: KratosConfiguration {
                     base_path: base_path.clone(),
