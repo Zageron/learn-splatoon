@@ -1,14 +1,13 @@
 extern crate env_logger;
-
 #[macro_use]
 extern crate maplit;
-
 extern crate dotenv;
 
-use dotenv::dotenv;
+mod authenticate;
+mod database;
 
 use actix_files::Files;
-use actix_http::body::AnyBody;
+use actix_http::body::BoxBody;
 use actix_web::dev::ServiceResponse;
 use actix_web::http::header;
 use actix_web::http::StatusCode;
@@ -19,10 +18,11 @@ use actix_web::middleware::{ErrorHandlerResponse, ErrorHandlers};
 use actix_web::web::Bytes;
 use actix_web::HttpRequest;
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Result};
-
+use database::connect;
+use dotenv::dotenv;
 use handlebars::Handlebars;
-
 use mongodb::bson::doc;
+use ory_kratos_client::apis::configuration::Configuration as KratosConfiguration;
 use serde::Deserialize;
 use serde::Serialize;
 use serde_json::json;
@@ -32,12 +32,6 @@ use std::fs::File;
 use std::io;
 use std::io::BufReader;
 use std::path::Path;
-
-mod database;
-use database::connect;
-
-use ory_kratos_client::apis::configuration::Configuration as KratosConfiguration;
-mod authenticate;
 
 // Macro documentation can be found in the actix_web_codegen crate
 #[get("/")]
@@ -171,7 +165,7 @@ async fn main() -> io::Result<()> {
     let base_path = std::env::var("ORY_SDK_URL").expect("ORY_SDK_URL is not set.");
 
     let connection_result = connect().await;
-    let connection = connection_result.is_ok();
+    let _connection_success = connection_result.is_ok();
 
     HttpServer::new(move || {
         App::new()
@@ -203,18 +197,18 @@ async fn main() -> io::Result<()> {
 }
 
 // Custom error handlers, to return HTML responses when an error occurs.
-fn error_handlers() -> ErrorHandlers<AnyBody> {
+fn error_handlers() -> ErrorHandlers<BoxBody> {
     ErrorHandlers::new().handler(StatusCode::NOT_FOUND, not_found)
 }
 
 // Error handler for a 404 Page not found error.
-fn not_found<B>(res: ServiceResponse<B>) -> Result<ErrorHandlerResponse<AnyBody>> {
+fn not_found<B>(res: ServiceResponse<B>) -> Result<ErrorHandlerResponse<BoxBody>> {
     let response = get_error_response(&res, "Page not found");
     Ok(ErrorHandlerResponse::Response(res.into_response(response)))
 }
 
 // Generic error handler.
-fn get_error_response<B>(res: &ServiceResponse<B>, error: &str) -> HttpResponse<AnyBody> {
+fn get_error_response<B>(res: &ServiceResponse<B>, error: &str) -> HttpResponse<BoxBody> {
     let request = res.request();
 
     // Provide a fallback to a simple plain text response in case an error occurs during the
