@@ -162,6 +162,9 @@ async fn main() -> io::Result<()> {
         .unwrap();
     let handlebars_ref = web::Data::new(handlebars);
 
+    let _language_file = read_language_file("./data/splatoon/english.json");
+    let _mains_file = read_mains_file("./data/splatoon/mains.json");
+
     let base_path = std::env::var("ORY_SDK_URL").expect("ORY_SDK_URL is not set.");
 
     let connection_result = connect().await;
@@ -256,11 +259,6 @@ mod tests {
     #[test]
     fn mains_exists() {
         assert!(read_mains_file("./data/splatoon/mains.json").is_ok());
-    }
-
-    #[test]
-    fn callouts_exists() {
-        assert!(read_language_file("./data/splatoon/english_gear_callouts.json").is_ok());
     }
 
     #[test]
