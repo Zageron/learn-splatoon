@@ -25,5 +25,6 @@ docker run -p 8081:8081 --env-file .env -ti learn-splatoon
 ## Github Action Testing
 
 ```bash
-act push --secret-file ".env"
+# "--secret-file" is strictly to avoid the error
+act push --env-file ".env" --reuse
 ```
