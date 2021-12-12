@@ -168,7 +168,8 @@ async fn main() -> io::Result<()> {
     let base_path = std::env::var("ORY_SDK_URL").expect("ORY_SDK_URL is not set.");
 
     let connection_result = connect().await;
-    let _connection_success = connection_result.is_ok();
+    let connection_success = connection_result.is_ok();
+    println!("Connected to Database: {:?}", connection_success);
 
     HttpServer::new(move || {
         App::new()
