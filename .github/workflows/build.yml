@@ -26,4 +26,4 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - uses: icepuma/rust-action@master
         with:
-          args: cd integration-test && cargo fmt -- --check && cargo clippy -- -Dwarnings && cargo test
+          args: cargo fmt -- --check && cargo clippy -- -Dwarnings && cargo test
