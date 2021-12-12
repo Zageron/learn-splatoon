@@ -24,19 +24,13 @@ jobs:
             ~/.cargo/git
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      - uses: actions/checkout@v1
-      - uses: actions-rs/toolchain@v1
+      - name: Rust Checks
+        uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           components: rustfmt
           override: true
       - name: Run fmt check
         run: cargo fmt --all -- --check
-      - uses: actions/checkout@v1
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          components: clippy
-          override: true
       - name: Run clippy check
         run: cargo clippy
