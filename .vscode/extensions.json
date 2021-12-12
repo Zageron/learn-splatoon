@@ -1,5 +1,9 @@
 {
     "recommendations": [
-        "zerotaskx.rust-extension-pack"
+        "zerotaskx.rust-extension-pack",
+        "mikestead.dotenv",
+        "coenraads.bracket-pair-colorizer-2",
+        "aaron-bond.better-comments",
+        "ms-azuretools.vscode-docker"
     ]
 }
