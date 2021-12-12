@@ -1,7 +1,7 @@
 # Learn Splatoon
 
 [![dependency status](https://deps.rs/repo/github/zageron/learn-splatoon/status.svg)](https://deps.rs/repo/github/zageron/learn-splatoon)
-[![Rust](https://github.com/Zageron/learn-splatoon/actions/workflows/build.yml/badge.svg?event=pull_request)](https://github.com/Zageron/learn-splatoon/actions/workflows/build.yml)
+[![Rust](https://github.com/Zageron/learn-splatoon/actions/workflows/build.yml/badge.svg)](https://github.com/Zageron/learn-splatoon/actions/workflows/build.yml)
 
 Personal implementation of the SM-2 SRS algorithm utilized to create a spaced reptition system to learn Splatoon callouts.
 
