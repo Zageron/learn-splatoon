@@ -3,7 +3,9 @@
 [![dependency status](https://deps.rs/repo/github/zageron/learn-splatoon/status.svg)](https://deps.rs/repo/github/zageron/learn-splatoon)
 [![Rust](https://github.com/Zageron/learn-splatoon/actions/workflows/build.yml/badge.svg)](https://github.com/Zageron/learn-splatoon/actions/workflows/build.yml)
 
-Personal implementation of the SM-2 SRS algorithm utilized to create a spaced reptition system to learn Splatoon callouts.
+:x: __Note: This repository and project is incomplete and not functional yet, you wont find much other than data.__
+
+Spaced Repetition learning platform for Splatoon 2 callouts, weapons, specials, and subs.
 
 ## Development Environment
 
