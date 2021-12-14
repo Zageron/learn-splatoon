@@ -47,7 +47,7 @@ async fn index(hb: web::Data<Handlebars<'_>>, _req: HttpRequest, body: Bytes) ->
         "parent".to_string() => "root".to_string()
     };
 
-    let body = hb.render("subentry", &data).unwrap();
+    let body = hb.render("pages/index", &data).unwrap();
 
     HttpResponse::Ok().body(body)
 }
@@ -159,7 +159,7 @@ async fn main() -> io::Result<()> {
     handlebars.set_dev_mode(cfg!(debug_assertions));
 
     handlebars
-        .register_templates_directory(".hbs", "./templates")
+        .register_templates_directory(".hbs", "templates/")
         .unwrap();
     let handlebars_ref = web::Data::new(handlebars);
 
@@ -176,12 +176,12 @@ async fn main() -> io::Result<()> {
         App::new()
             .app_data(handlebars_ref.clone())
             .app_data(web::Data::new(connection_result.clone()))
-            .wrap(KratosIdentity {
-                configuration: KratosConfiguration {
-                    base_path: base_path.clone(),
-                    ..Default::default()
-                },
-            })
+            // .wrap(KratosIdentity {
+            //     configuration: KratosConfiguration {
+            //         base_path: base_path.clone(),
+            //         ..Default::default()
+            //     },
+            // })
             .wrap(NormalizePath::new(TrailingSlash::Trim))
             .wrap(error_handlers())
             .wrap(Logger::default())
