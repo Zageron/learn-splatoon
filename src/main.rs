@@ -1,37 +1,38 @@
-extern crate env_logger;
 #[macro_use]
 extern crate maplit;
 extern crate dotenv;
+extern crate env_logger;
 
 mod authenticate;
 mod database;
 
+use authenticate::KratosIdentity;
+use database::connect;
+
 use actix_files::Files;
 use actix_http::body::BoxBody;
-use actix_web::dev::ServiceResponse;
-use actix_web::http::header;
-use actix_web::http::StatusCode;
-use actix_web::middleware;
-use actix_web::middleware::Logger;
-use actix_web::middleware::TrailingSlash;
-use actix_web::middleware::{ErrorHandlerResponse, ErrorHandlers};
-use actix_web::web::Bytes;
-use actix_web::HttpRequest;
-use actix_web::{get, post, web, App, HttpResponse, HttpServer, Result};
-use database::connect;
+use actix_web::{
+    dev::ServiceResponse,
+    get,
+    http::{header, StatusCode},
+    middleware::{ErrorHandlerResponse, ErrorHandlers, Logger, NormalizePath, TrailingSlash},
+    post,
+    web::{self, Bytes},
+    App, HttpRequest, HttpResponse, HttpServer, Result,
+};
 use dotenv::dotenv;
 use handlebars::Handlebars;
 use mongodb::bson::doc;
 use ory_kratos_client::apis::configuration::Configuration as KratosConfiguration;
-use serde::Deserialize;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use serde_json::json;
-use std::collections::HashMap;
-use std::error::Error;
-use std::fs::File;
-use std::io;
-use std::io::BufReader;
-use std::path::Path;
+use std::{
+    collections::HashMap,
+    error::Error,
+    fs::File,
+    io::{self, BufReader},
+    path::Path,
+};
 
 // Macro documentation can be found in the actix_web_codegen crate
 #[get("/")]
@@ -175,13 +176,13 @@ async fn main() -> io::Result<()> {
         App::new()
             .app_data(handlebars_ref.clone())
             .app_data(web::Data::new(connection_result.clone()))
-            .wrap(authenticate::KratosIdentity {
+            .wrap(KratosIdentity {
                 configuration: KratosConfiguration {
                     base_path: base_path.clone(),
                     ..Default::default()
                 },
             })
-            .wrap(middleware::NormalizePath::new(TrailingSlash::Trim))
+            .wrap(NormalizePath::new(TrailingSlash::Trim))
             .wrap(error_handlers())
             .wrap(Logger::default())
             .service(
