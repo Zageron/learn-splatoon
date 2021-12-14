@@ -6,24 +6,23 @@ extern crate env_logger;
 mod authenticate;
 mod database;
 
-use authenticate::KratosIdentity;
+//use authenticate::KratosIdentity;
 use database::connect;
 
 use actix_files::Files;
 use actix_http::body::BoxBody;
 use actix_web::{
     dev::ServiceResponse,
-    get, guard,
+    guard,
     http::{header, StatusCode},
     middleware::{ErrorHandlerResponse, ErrorHandlers, Logger, NormalizePath, TrailingSlash},
-    post,
     web::{self, Bytes},
     App, HttpRequest, HttpResponse, HttpServer, Result,
 };
 use dotenv::dotenv;
 use handlebars::Handlebars;
 use mongodb::bson::doc;
-use ory_kratos_client::apis::configuration::Configuration as KratosConfiguration;
+//use ory_kratos_client::apis::configuration::Configuration as KratosConfiguration;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use std::{
@@ -56,21 +55,21 @@ struct Info {
     entry_id: u32,
 }
 
-async fn srs(_hb: web::Data<Handlebars<'_>>) -> HttpResponse {
+async fn study(_hb: web::Data<Handlebars<'_>>) -> HttpResponse {
     HttpResponse::Ok().body("You need to pick an entry to study.")
 }
 
-async fn srs_entry(_hb: web::Data<Handlebars<'_>>, info: web::Path<Info>) -> HttpResponse {
+async fn study_entry(_hb: web::Data<Handlebars<'_>>, info: web::Path<Info>) -> HttpResponse {
     println!("Entry {:?}", info.entry_id);
     HttpResponse::Ok().body(format!("{:?}", info))
 }
 
-async fn srs_submit(_hb: web::Data<Handlebars<'_>>, info: web::Path<Info>) -> HttpResponse {
+async fn study_submit(_hb: web::Data<Handlebars<'_>>, info: web::Path<Info>) -> HttpResponse {
     HttpResponse::Ok().body(format!("{:?}", info))
 }
 
-async fn learning_entry(_hb: web::Data<Handlebars<'_>>, info: web::Path<Info>) -> HttpResponse {
-    HttpResponse::Ok().body(format!("{:?}", info))
+async fn learning_entry(_hb: web::Data<Handlebars<'_>>) -> HttpResponse {
+    HttpResponse::Ok().body("You have no topics left to learn.")
 }
 
 async fn copyright(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
@@ -164,7 +163,7 @@ async fn main() -> io::Result<()> {
     let _language_file = read_language_file("./data/splatoon/english.json");
     let _mains_file = read_mains_file("./data/splatoon/mains.json");
 
-    let base_path = std::env::var("ORY_SDK_URL").expect("ORY_SDK_URL is not set.");
+    let _base_path = std::env::var("ORY_SDK_URL").expect("ORY_SDK_URL is not set.");
 
     let connection_result = connect().await;
     let connection_success = connection_result.is_ok();
@@ -180,34 +179,34 @@ async fn main() -> io::Result<()> {
             //         ..Default::default()
             //     },
             //})
-            //.wrap(NormalizePath::new(TrailingSlash::Trim))
+            .wrap(NormalizePath::new(TrailingSlash::Trim))
             .wrap(error_handlers())
             .wrap(Logger::default())
             .service(
                 web::scope("/learn").service(
-                    web::resource(["", "/"])
+                    web::resource(["/", ""])
                         .guard(guard::Get())
                         .to(learning_entry),
                 ),
             )
-            // .service(
-            //     web::scope("study")
-            //         .service(web::resource("").guard(guard::Get()).to(srs))
-            //         .service(
-            //             web::resource("{entry_id}")
-            //                 .guard(guard::Get())
-            //                 .to(srs_entry),
-            //         )
-            //         .service(
-            //             web::resource("{entry_id}")
-            //                 .guard(guard::Post())
-            //                 .to(srs_submit),
-            //         ),
-            // )
+            .service(
+                web::scope("/study")
+                    .service(web::resource(["/", ""]).guard(guard::Get()).to(study))
+                    .service(
+                        web::resource("{entry_id}")
+                            .guard(guard::Get())
+                            .to(study_entry),
+                    )
+                    .service(
+                        web::resource("{entry_id}")
+                            .guard(guard::Post())
+                            .to(study_submit),
+                    ),
+            )
             .service(web::resource("/").guard(guard::Get()).to(index))
-        // .service(web::resource("copyright").guard(guard::Get()).to(copyright))
-        // .service(web::resource("robots.txt").guard(guard::Get()).to(robots))
-        //.service(Files::new("/", "./data/web"))
+            .service(web::resource("copyright").guard(guard::Get()).to(copyright))
+            .service(web::resource("robots.txt").guard(guard::Get()).to(robots))
+            .service(Files::new("/", "./data/web"))
     })
     .bind("0.0.0.0:8081")?
     .run()
