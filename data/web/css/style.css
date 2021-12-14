@@ -80,3 +80,10 @@ body {
 .cover-container {
   max-width: 42em;
 }
+
+
+    web::route()
+        .guard(guard::Get())
+        .guard(guard::Header("content-type", "text/plain"))
+        .to(|req: HttpRequest| HttpResponse::Ok()))
+);

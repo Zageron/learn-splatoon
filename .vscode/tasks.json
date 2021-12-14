@@ -30,6 +30,17 @@
             "type": "shell",
             "isBackground": true,
             "command": "ory",
+            "runOptions": {
+                "runOn": "folderOpen"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
             "args": [
                 "proxy",
                 "http://localhost",

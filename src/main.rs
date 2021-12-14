@@ -13,7 +13,7 @@ use actix_files::Files;
 use actix_http::body::BoxBody;
 use actix_web::{
     dev::ServiceResponse,
-    get,
+    get, guard,
     http::{header, StatusCode},
     middleware::{ErrorHandlerResponse, ErrorHandlers, Logger, NormalizePath, TrailingSlash},
     post,
@@ -35,7 +35,6 @@ use std::{
 };
 
 // Macro documentation can be found in the actix_web_codegen crate
-#[get("/")]
 async fn index(hb: web::Data<Handlebars<'_>>, _req: HttpRequest, body: Bytes) -> HttpResponse {
     println!("{:?}", _req);
     println!("{:?}", body);
@@ -57,23 +56,23 @@ struct Info {
     entry_id: u32,
 }
 
-#[get("")]
 async fn srs(_hb: web::Data<Handlebars<'_>>) -> HttpResponse {
     HttpResponse::Ok().body("You need to pick an entry to study.")
 }
 
-#[get("/{entry_id}")]
 async fn srs_entry(_hb: web::Data<Handlebars<'_>>, info: web::Path<Info>) -> HttpResponse {
     println!("Entry {:?}", info.entry_id);
     HttpResponse::Ok().body(format!("{:?}", info))
 }
 
-#[post("/{entry_id}")]
 async fn srs_submit(_hb: web::Data<Handlebars<'_>>, info: web::Path<Info>) -> HttpResponse {
     HttpResponse::Ok().body(format!("{:?}", info))
 }
 
-#[get("/copyright")]
+async fn learning_entry(_hb: web::Data<Handlebars<'_>>, info: web::Path<Info>) -> HttpResponse {
+    HttpResponse::Ok().body(format!("{:?}", info))
+}
+
 async fn copyright(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
     let data = btreemap! {
         "author".to_string() => "Zageron".to_string(),
@@ -84,7 +83,6 @@ async fn copyright(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
     HttpResponse::Ok().body(body)
 }
 
-#[get("/robots.txt")]
 async fn robots(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
     let data = btreemap! {
         "url".to_string() => "https://www.zageron.com".to_string(),
@@ -181,20 +179,35 @@ async fn main() -> io::Result<()> {
             //         base_path: base_path.clone(),
             //         ..Default::default()
             //     },
-            // })
-            .wrap(NormalizePath::new(TrailingSlash::Trim))
+            //})
+            //.wrap(NormalizePath::new(TrailingSlash::Trim))
             .wrap(error_handlers())
             .wrap(Logger::default())
             .service(
-                web::scope("/srs")
-                    .service(srs)
-                    .service(srs_entry)
-                    .service(srs_submit),
+                web::scope("/learn").service(
+                    web::resource(["", "/"])
+                        .guard(guard::Get())
+                        .to(learning_entry),
+                ),
             )
-            .service(index)
-            .service(copyright)
-            .service(robots)
-            .service(Files::new("/", "./data/web"))
+            // .service(
+            //     web::scope("study")
+            //         .service(web::resource("").guard(guard::Get()).to(srs))
+            //         .service(
+            //             web::resource("{entry_id}")
+            //                 .guard(guard::Get())
+            //                 .to(srs_entry),
+            //         )
+            //         .service(
+            //             web::resource("{entry_id}")
+            //                 .guard(guard::Post())
+            //                 .to(srs_submit),
+            //         ),
+            // )
+            .service(web::resource("/").guard(guard::Get()).to(index))
+        // .service(web::resource("copyright").guard(guard::Get()).to(copyright))
+        // .service(web::resource("robots.txt").guard(guard::Get()).to(robots))
+        //.service(Files::new("/", "./data/web"))
     })
     .bind("0.0.0.0:8081")?
     .run()
