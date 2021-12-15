@@ -16,8 +16,7 @@ use actix_web::{
     guard,
     http::{header, StatusCode},
     middleware::{ErrorHandlerResponse, ErrorHandlers, Logger, NormalizePath, TrailingSlash},
-    web::{self, Bytes},
-    App, HttpRequest, HttpResponse, HttpServer, Result,
+    web, App, HttpRequest, HttpResponse, HttpServer, Result,
 };
 use dotenv::dotenv;
 use handlebars::Handlebars;
@@ -26,27 +25,30 @@ use mongodb::bson::doc;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use std::{
-    collections::HashMap,
+    collections::{BTreeMap, HashMap},
     error::Error,
     fs::File,
     io::{self, BufReader},
     path::Path,
 };
 
+#[derive(Clone, Debug, Deserialize)]
+struct RootData {
+    data: BTreeMap<String, String>,
+}
+
+#[derive(Clone, Debug, Deserialize)]
+struct LearningData {
+    data: BTreeMap<String, String>,
+}
+
 // Macro documentation can be found in the actix_web_codegen crate
-async fn index(hb: web::Data<Handlebars<'_>>, _req: HttpRequest, body: Bytes) -> HttpResponse {
-    println!("{:?}", _req);
-    println!("{:?}", body);
-    let data = btreemap! {
-        "title".to_string() => "Learn - Splatoon Callouts".to_string(),
-        "author".to_string() => "Zageron".to_string(),
-        "url".to_string() => "https://www.zageron.com/learn/splatoon".to_string(),
-        "description".to_string() => "A Spaced Repetition site for memorizing Splatoon 2 callouts.".to_string(),
-        "parent".to_string() => "root".to_string()
-    };
-
-    let body = hb.render("pages/index", &data).unwrap();
-
+async fn index(
+    hb: web::Data<Handlebars<'_>>,
+    root_template_data: web::Data<RootData>,
+    _req: HttpRequest,
+) -> HttpResponse {
+    let body = hb.render("pages/index", &root_template_data.data).unwrap();
     HttpResponse::Ok().body(body)
 }
 
@@ -68,8 +70,18 @@ async fn study_submit(_hb: web::Data<Handlebars<'_>>, info: web::Path<Info>) -> 
     HttpResponse::Ok().body(format!("{:?}", info))
 }
 
-async fn learning_entry(_hb: web::Data<Handlebars<'_>>) -> HttpResponse {
-    HttpResponse::Ok().body("You have no topics left to learn.")
+async fn learning_entry(
+    hb: web::Data<Handlebars<'_>>,
+    root_template_data: web::Data<RootData>,
+    learning_data: web::Data<LearningData>,
+) -> HttpResponse {
+    let mut data: BTreeMap<&String, &String> = BTreeMap::new();
+    data.extend(root_template_data.data.iter());
+    data.extend(learning_data.data.iter());
+
+    let body = hb.render("pages/learn", &data).unwrap();
+    println!("{}", body);
+    HttpResponse::Ok().body(body)
 }
 
 async fn copyright(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
@@ -169,10 +181,31 @@ async fn main() -> io::Result<()> {
     let connection_success = connection_result.is_ok();
     println!("Connected to Database: {:?}", connection_success);
 
+    let root_template_data = RootData {
+        data: btreemap! {
+            "title".to_string() => "Learn - Splatoon Callouts".to_string(),
+            "author".to_string() => "Zageron".to_string(),
+            "url".to_string() => "https://www.zageron.com/learn/splatoon".to_string(),
+            "description".to_string() => "A Spaced Repetition site for memorizing Splatoon 2 callouts.".to_string(),
+            "parent".to_string() => "root".to_string()
+        },
+    };
+
+    let learning_data = LearningData {
+        data: btreemap! {
+            "item_header".to_string() => "Test Item".to_string(),
+            "item_title".to_string() => "Sploosh".to_string(),
+            "item_description".to_string() => "Splooshes be splooshing.".to_string(),
+            "item_footer".to_string() => "You've learned this already.".to_string(),
+        },
+    };
+
     HttpServer::new(move || {
         App::new()
             .app_data(handlebars_ref.clone())
             .app_data(web::Data::new(connection_result.clone()))
+            .app_data(web::Data::new(root_template_data.clone()))
+            .app_data(web::Data::new(learning_data.clone()))
             // .wrap(KratosIdentity {
             //     configuration: KratosConfiguration {
             //         base_path: base_path.clone(),
