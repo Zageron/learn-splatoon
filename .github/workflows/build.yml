@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths-ignore:
-      - "README.md"
+      - "*.md"
       - ".vscode/**"
 
   pull_request:
@@ -14,7 +14,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
 
     steps:
@@ -35,12 +35,6 @@ jobs:
           toolchain: stable
           components: rustfmt
           override: true
-
-      - name: Build Debug
-        run: cargo build
-
-      - name: Build Release
-        run: cargo build --release
 
       - name: Linter
         run: cargo fmt --all -- --check
