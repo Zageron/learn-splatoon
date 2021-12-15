@@ -5,6 +5,7 @@ extern crate env_logger;
 
 mod authenticate;
 mod database;
+mod splatoon_data_helpers;
 
 //use authenticate::KratosIdentity;
 use database::connect;
@@ -22,15 +23,9 @@ use dotenv::dotenv;
 use handlebars::Handlebars;
 use mongodb::bson::doc;
 //use ory_kratos_client::apis::configuration::Configuration as KratosConfiguration;
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use serde_json::json;
-use std::{
-    collections::{BTreeMap, HashMap},
-    error::Error,
-    fs::File,
-    io::{self, BufReader},
-    path::Path,
-};
+use std::{collections::BTreeMap, io};
 
 #[derive(Clone, Debug, Deserialize)]
 struct RootData {
@@ -106,54 +101,6 @@ async fn robots(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
     builder.body(body)
 }
 
-#[derive(Serialize, Deserialize, Debug)]
-struct LanguageLookup {
-    #[serde(flatten)]
-    inner: HashMap<String, String>,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-#[serde(rename_all = "PascalCase")]
-struct MainWeapons {
-    addition: u32,
-    id: u32,
-    ink_saver_lv: String,
-    lock: String,
-    main_up_gear_power_type: String,
-    move_vel_lv: String,
-    name: String,
-    param0: String,
-    param1: String,
-    param2: String,
-    param_value0: u32,
-    param_value1: u32,
-    param_value2: u32,
-    price: u32,
-    range: u32,
-    rank: u32,
-    shot_move_vel_type: String,
-    special: String,
-    special_cost: u32,
-    stealth_move_acc_lv: String,
-    sub: String,
-}
-
-fn read_language_file<P: AsRef<Path>>(path: P) -> Result<LanguageLookup, Box<dyn Error>> {
-    let file = File::open(path)?;
-    let reader = BufReader::new(file);
-    let language: LanguageLookup =
-        serde_json::from_reader(reader).expect("JSON was not well-formatted.");
-    Ok(language)
-}
-
-fn read_mains_file<P: AsRef<Path>>(path: P) -> Result<Vec<MainWeapons>, Box<dyn Error>> {
-    let file = File::open(path)?;
-    let reader = BufReader::new(file);
-    let mains: Vec<MainWeapons> =
-        serde_json::from_reader(reader).expect("JSON was not well-formatted.");
-    Ok(mains)
-}
-
 #[actix_web::main]
 async fn main() -> io::Result<()> {
     dotenv().ok();
@@ -172,8 +119,11 @@ async fn main() -> io::Result<()> {
         .unwrap();
     let handlebars_ref = web::Data::new(handlebars);
 
-    let _language_file = read_language_file("./data/splatoon/english.json");
-    let _mains_file = read_mains_file("./data/splatoon/mains.json");
+    let _brands = splatoon_data_helpers::read_brands("./data/splatoon/english.json");
+    let _language_file = splatoon_data_helpers::read_language("./data/splatoon/english.json");
+    let _mains_file = splatoon_data_helpers::read_main_weapons("./data/splatoon/mains.json");
+    let _specials = splatoon_data_helpers::read_specials("./data/splatoon/mains.json");
+    let _subs = splatoon_data_helpers::read_subs("./data/splatoon/mains.json");
 
     let _base_path = std::env::var("ORY_SDK_URL").expect("ORY_SDK_URL is not set.");
 
@@ -294,28 +244,73 @@ fn get_error_response<B>(res: &ServiceResponse<B>, error: &str) -> HttpResponse<
 
 #[cfg(test)]
 mod tests {
-    use crate::read_language_file;
-    use crate::read_mains_file;
-    use crate::MainWeapons;
+    use crate::splatoon_data_helpers::{
+        read_brands, read_language, read_main_weapons, read_specials, read_subs, MainWeapon,
+    };
 
     #[test]
-    fn language_english_exists() {
-        assert!(read_language_file("./data/splatoon/english.json").is_ok());
+    fn file_exists_brands() {
+        let result = read_brands("./data/splatoon/brands.json");
+        match result {
+            Ok(_) => {}
+            Err(ref err) => err.chain().for_each(|cause| println!("because: {}", cause)),
+        }
+
+        assert!(result.is_ok())
     }
 
     #[test]
-    fn mains_exists() {
-        assert!(read_mains_file("./data/splatoon/mains.json").is_ok());
+    fn file_exists_language_english() {
+        let result = read_language("./data/splatoon/english.json");
+        match result {
+            Ok(_) => {}
+            Err(ref err) => err.chain().for_each(|cause| println!("because: {}", cause)),
+        }
+
+        assert!(result.is_ok())
+    }
+
+    #[test]
+    fn file_exists_main_weapons() {
+        let result = read_main_weapons("./data/splatoon/mains.json");
+        match result {
+            Ok(_) => {}
+            Err(ref err) => err.chain().for_each(|cause| println!("because: {}", cause)),
+        }
+
+        assert!(result.is_ok())
+    }
+
+    #[test]
+    fn file_exists_specials() {
+        let result = read_specials("./data/splatoon/specials.json");
+        match result {
+            Ok(_) => {}
+            Err(ref err) => err.chain().for_each(|cause| println!("because: {}", cause)),
+        }
+
+        assert!(result.is_ok())
+    }
+
+    #[test]
+    fn file_exists_subs() {
+        let result = read_subs("./data/splatoon/subs.json");
+        match result {
+            Ok(_) => {}
+            Err(ref err) => err.chain().for_each(|cause| println!("because: {}", cause)),
+        }
+
+        assert!(result.is_ok())
     }
 
     #[test]
     fn test_langauge_lookup() {
         // Testing out splatoon weaponry stuff.
-        let english_lang = read_language_file("./data/splatoon/english.json").unwrap();
-        let main_weapons = read_mains_file("./data/splatoon/mains.json").unwrap();
+        let english_lang = read_language("./data/splatoon/english.json").unwrap();
+        let main_weapons = read_main_weapons("./data/splatoon/mains.json").unwrap();
 
-        let main: &MainWeapons = &main_weapons[0];
-        let name: &String = &english_lang.inner[&main.name];
+        let main: &MainWeapon = &main_weapons[0];
+        let name: &String = english_lang._get(main._name());
         assert_eq!(name, "Sploosh-o-matic");
     }
 }
