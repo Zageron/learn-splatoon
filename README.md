@@ -2,7 +2,7 @@
 
 [![dependencies](https://deps.rs/repo/github/zageron/learn-splatoon/status.svg)](https://deps.rs/repo/github/zageron/learn-splatoon)
 [![CI](https://github.com/Zageron/learn-splatoon/actions/workflows/build.yml/badge.svg)](https://github.com/Zageron/learn-splatoon/actions/workflows/build.yml)
-![rustc](https://img.shields.io/badge/rustc-1.57-lightgray.svg)
+[![rustc](https://img.shields.io/badge/rustc-1.57-lightgray.svg)](https://www.rust-lang.org/)
 
 :x: __Note: This repository and project is incomplete and not functional yet, you wont find much other than data.__
 
