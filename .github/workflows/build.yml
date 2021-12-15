@@ -4,8 +4,8 @@ on:
   push:
     branches: [main]
     paths-ignore:
-      - 'README.md'
-      - '.vscode/**'
+      - "README.md"
+      - ".vscode/**"
 
   pull_request:
     branches: [main]
@@ -28,13 +28,25 @@ jobs:
             ~/.cargo/git
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           components: rustfmt
           override: true
-      - name: Run fmt check
+
+      - name: Build Debug
+        run: cargo build
+
+      - name: Build Release
+        run: cargo build --release
+
+      - name: Linter
         run: cargo fmt --all -- --check
-      - name: Run clippy check
+
+      - name: Clippy
         run: cargo clippy -- -D warnings
+
+      - name: Cargo Tests
+        run: cargo test
