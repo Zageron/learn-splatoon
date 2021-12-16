@@ -10,7 +10,7 @@ Spaced Repetition learning platform for Splatoon 2 callouts, weapons, specials, 
 
 ## Development Environment
 
-## Dependency update practice
+### Dependency Update
 
 ```bash
 cargo upgrade --allow-prerelease ;; cargo update ;; cargo build ;; cargo build --release
