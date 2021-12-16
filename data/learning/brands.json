@@ -1,0 +1,114 @@
+[
+    {
+        "id": "B17",
+        "priority": 137
+    },
+    {
+        "id": "custom",
+        "priority": 124
+    },
+    {
+        "id": "deco",
+        "priority": 118
+    },
+    {
+        "id": "splat",
+        "priority": 118
+    },
+    {
+        "id": "ammo",
+        "priority": 117
+    },
+    {
+        "id": "sheldon",
+        "priority": 112
+    },
+    {
+        "id": "neo",
+        "priority": 110
+    },
+    {
+        "id": "nouveau",
+        "priority": 110
+    },
+    {
+        "id": "B00",
+        "priority": 47
+    },
+    {
+        "id": "B10",
+        "priority": 46
+    },
+    {
+        "id": "B98",
+        "priority": 43
+    },
+    {
+        "id": "B04",
+        "priority": 40
+    },
+    {
+        "id": "B05",
+        "priority": 40
+    },
+    {
+        "id": "B03",
+        "priority": 39
+    },
+    {
+        "id": "B08",
+        "priority": 38
+    },
+    {
+        "id": "B09",
+        "priority": 34
+    },
+    {
+        "id": "B02",
+        "priority": 33
+    },
+    {
+        "id": "B99",
+        "priority": 33
+    },
+    {
+        "id": "B01",
+        "priority": 31
+    },
+    {
+        "id": "B06",
+        "priority": 31
+    },
+    {
+        "id": "B11",
+        "priority": 31
+    },
+    {
+        "id": "B16",
+        "priority": 30
+    },
+    {
+        "id": "B97",
+        "priority": 30
+    },
+    {
+        "id": "B07",
+        "priority": 27
+    },
+    {
+        "id": "B15",
+        "priority": 18
+    },
+    {
+        "id": "dolphin",
+        "priority": 6
+    },
+    {
+        "id": "sorella",
+        "priority": 6
+    },
+    {
+        "id": "foil",
+        "priority": 4
+    }
+]
