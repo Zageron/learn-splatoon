@@ -3,6 +3,17 @@ use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, fs::File, io::BufReader, path::Path};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Version {
+    version: String,
+}
+
+impl Version {
+    pub fn version(&self) -> &String {
+        &self.version
+    }
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(transparent)]
 pub struct Brands {
     #[serde(flatten)]
@@ -101,6 +112,14 @@ pub fn read_specials<P: AsRef<Path>>(path: P) -> Result<Vec<Special>> {
 }
 
 pub fn read_subs<P: AsRef<Path>>(path: P) -> Result<Vec<Sub>> {
+    let handle = File::open(path.as_ref())
+        .with_context(|| format!("{:?} does not exist.", path.as_ref().to_str()))?;
+    let reader = BufReader::new(handle);
+    serde_json::from_reader(reader)
+        .with_context(|| format!("{:?} data is malformed.", path.as_ref().to_str()))
+}
+
+pub fn read_version<P: AsRef<Path>>(path: P) -> Result<Version> {
     let handle = File::open(path.as_ref())
         .with_context(|| format!("{:?} does not exist.", path.as_ref().to_str()))?;
     let reader = BufReader::new(handle);

@@ -124,6 +124,8 @@ async fn main() -> io::Result<()> {
     let _mains_file = splatoon_data_helpers::read_main_weapons("./data/splatoon/mains.json");
     let _specials = splatoon_data_helpers::read_specials("./data/splatoon/mains.json");
     let _subs = splatoon_data_helpers::read_subs("./data/splatoon/mains.json");
+    let version = splatoon_data_helpers::read_version("./data/splatoon/version.json").unwrap();
+    println!("This app accurate as of Splatoon 2 v{}.", version.version());
 
     let _base_path = std::env::var("ORY_SDK_URL").expect("ORY_SDK_URL is not set.");
 
@@ -245,7 +247,8 @@ fn get_error_response<B>(res: &ServiceResponse<B>, error: &str) -> HttpResponse<
 #[cfg(test)]
 mod tests {
     use crate::splatoon_data_helpers::{
-        read_brands, read_language, read_main_weapons, read_specials, read_subs, MainWeapon,
+        read_brands, read_language, read_main_weapons, read_specials, read_subs, read_version,
+        MainWeapon,
     };
 
     #[test]
@@ -312,5 +315,16 @@ mod tests {
         let main: &MainWeapon = &main_weapons[0];
         let name: &String = english_lang._get(main._name());
         assert_eq!(name, "Sploosh-o-matic");
+    }
+
+    #[test]
+    fn file_exists_version() {
+        let result = read_version("./data/splatoon/version.json");
+        match result {
+            Ok(_) => {}
+            Err(ref err) => err.chain().for_each(|cause| println!("because: {}", cause)),
+        }
+
+        assert!(result.is_ok())
     }
 }
