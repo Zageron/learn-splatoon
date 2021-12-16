@@ -1,0 +1,106 @@
+[
+    {
+        "id": "BombDamage_Reduction",
+        "order": 0
+    },
+    {
+        "id": "BombDistance_Up",
+        "order": 0
+    },
+    {
+        "id": "HumanMove_Up",
+        "order": 0
+    },
+    {
+        "id": "InkRecovery_Up",
+        "order": 0
+    },
+    {
+        "id": "MarkingTime_Reduction",
+        "order": 0
+    },
+    {
+        "id": "ObjectEffect_Up",
+        "order": 0
+    },
+    {
+        "id": "OpInkEffect_Reduction",
+        "order": 0
+    },
+    {
+        "id": "SquidMove_Up",
+        "order": 0
+    },
+    {
+        "id": "SquidMoveSpatter_Reduction",
+        "order": 0
+    },
+    {
+        "id": "SuperJumpSign_Hide",
+        "order": 0
+    },
+    {
+        "id": "JumpTime_Save",
+        "order": 1
+    },
+    {
+        "id": "RespawnSpecialGauge_Save",
+        "order": 1
+    },
+    {
+        "id": "SpecialIncrease_Up",
+        "order": 1
+    },
+    {
+        "id": "SpecialTime_Up",
+        "order": 1
+    },
+    {
+        "id": "MainInk_Save",
+        "order": 2
+    },
+    {
+        "id": "RespawnTime_Save",
+        "order": 2
+    },
+    {
+        "id": "SubInk_Save",
+        "order": 3
+    },
+    {
+        "id": "SomersaultLanding",
+        "order": 4
+    },
+    {
+        "id": "ComeBack",
+        "order": 5
+    },
+    {
+        "id": "DeathMarking",
+        "order": 5
+    },
+    {
+        "id": "EndAllUp",
+        "order": 5
+    },
+    {
+        "id": "Exorcist",
+        "order": 5
+    },
+    {
+        "id": "ExSkillDouble",
+        "order": 5
+    },
+    {
+        "id": "MinorityUp",
+        "order": 5
+    },
+    {
+        "id": "StartAllUp",
+        "order": 5
+    },
+    {
+        "id": "ThermalInk",
+        "order": 5
+    }
+]
