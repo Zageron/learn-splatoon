@@ -1,0 +1,54 @@
+[
+    {
+        "id": "SuperMissile",
+        "order": 0
+    },
+    {
+        "id": "SuperArmor",
+        "order": 1
+    },
+    {
+        "id": "LauncherSplash",
+        "order": 2
+    },
+    {
+        "id": "LauncherSuction",
+        "order": 3
+    },
+    {
+        "id": "LauncherQuick",
+        "order": 4
+    },
+    {
+        "id": "LauncherCurling",
+        "order": 5
+    },
+    {
+        "id": "LauncherRobo",
+        "order": 6
+    },
+    {
+        "id": "WaterCutter",
+        "order": 7
+    },
+    {
+        "id": "Jetpack",
+        "order": 8
+    },
+    {
+        "id": "SuperLanding",
+        "order": 9
+    },
+    {
+        "id": "RainCloud",
+        "order": 10
+    },
+    {
+        "id": "AquaBall",
+        "order": 11
+    },
+    {
+        "id": "SuperBubble",
+        "order": 12
+    }
+]

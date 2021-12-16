@@ -1,0 +1,54 @@
+[
+    {
+        "id": "Bomb_Splash",
+        "order": 0
+    },
+    {
+        "id": "Bomb_Suction",
+        "order": 1
+    },
+    {
+        "id": "Bomb_Quick",
+        "order": 2
+    },
+    {
+        "id": "Bomb_Curling",
+        "order": 3
+    },
+    {
+        "id": "Bomb_Robo",
+        "order": 4
+    },
+    {
+        "id": "TimerTrap",
+        "order": 5
+    },
+    {
+        "id": "Sprinkler",
+        "order": 6
+    },
+    {
+        "id": "PoisonFog",
+        "order": 7
+    },
+    {
+        "id": "PointSensor",
+        "order": 8
+    },
+    {
+        "id": "Shield",
+        "order": 9
+    },
+    {
+        "id": "Flag",
+        "order": 10
+    },
+    {
+        "id": "Bomb_Piyo",
+        "order": 11
+    },
+    {
+        "id": "Bomb_Tako",
+        "order": 12
+    }
+]
