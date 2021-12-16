@@ -1,0 +1,65 @@
+{
+    "B00": {
+        "common": "OpInkEffect_Reduction",
+        "uncommon": "SubInk_Save"
+    },
+    "B01": {
+        "common": "JumpTime_Save",
+        "uncommon": "RespawnTime_Save"
+    },
+    "B02": {
+        "common": "SquidMove_Up",
+        "uncommon": "BombDamage_Reduction"
+    },
+    "B03": {
+        "common": "HumanMove_Up",
+        "uncommon": "BombDamage_Reduction"
+    },
+    "B04": {
+        "common": "RespawnSpecialGauge_Save",
+        "uncommon": "SpecialIncrease_Up"
+    },
+    "B05": {
+        "common": "SpecialTime_Up",
+        "uncommon": "SubInk_Save"
+    },
+    "B06": {
+        "common": "SubInk_Save",
+        "uncommon": "InkRecovery_Up"
+    },
+    "B07": {
+        "common": "RespawnTime_Save",
+        "uncommon": "RespawnSpecialGauge_Save"
+    },
+    "B08": {
+        "common": "MainInk_Save",
+        "uncommon": "HumanMove_Up"
+    },
+    "B09": {
+        "common": "BombDamage_Reduction",
+        "uncommon": "MarkingTime_Reduction"
+    },
+    "B10": {
+        "common": "InkRecovery_Up",
+        "uncommon": "JumpTime_Save"
+    },
+    "B11": {
+        "common": "SpecialIncrease_Up",
+        "uncommon": "SpecialTime_Up"
+    },
+    "B15": {
+        "common": "MarkingTime_Reduction",
+        "uncommon": "RespawnSpecialGauge_Save"
+    },
+    "B16": {
+        "common": "BombDistance_Up",
+        "uncommon": "OpInkEffect_Reduction"
+    },
+    "B17": {
+        "common": "MarkingTime_Reduction",
+        "uncommon": "BombDistance_Up"
+    },
+    "B97": null,
+    "B98": null,
+    "B99": null
+}
