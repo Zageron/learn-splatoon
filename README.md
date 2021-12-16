@@ -10,6 +10,12 @@ Spaced Repetition learning platform for Splatoon 2 callouts, weapons, specials, 
 
 ## Development Environment
 
+## Dependency update practice
+
+```bash
+cargo upgrade --allow-prerelease ;; cargo update ;; cargo build ;; cargo build --release
+```
+
 ### Ory Proxy
 
 VSC Task should start this automatically.
