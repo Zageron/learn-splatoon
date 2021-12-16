@@ -2,7 +2,9 @@
 
 [![dependencies](https://deps.rs/repo/github/zageron/learn-splatoon/status.svg)](https://deps.rs/repo/github/zageron/learn-splatoon)
 [![CI](https://github.com/Zageron/learn-splatoon/actions/workflows/validate.yml/badge.svg)](https://github.com/Zageron/learn-splatoon/actions/workflows/validate.yml)
-[![rustc](https://img.shields.io/badge/rustc-1.57-lightgray.svg)](https://www.rust-lang.org/)
+![CI](https://img.shields.io/github/workflow/status/Zageron/learn-splatoon/CI?style=flat-square)
+[![rustc](https://img.shields.io/badge/rustc-1.57-lightgray.svg?style=flat-square)](https://www.rust-lang.org/)
+[![discord](https://img.shields.io/discord/921110926751584346?label=discord&color=7289DA&logo=discord&logoColor=white&style=flat-square)](https://discord.com/invite/g4uHt46U)
 
 :x: __Note: This repository and project is incomplete and not functional yet, you wont find much other than data.__
 
