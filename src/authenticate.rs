@@ -8,10 +8,7 @@ use actix_web::{
 };
 
 use ory_kratos_client::{
-    apis::{
-        configuration::Configuration as KratosConfiguration,
-        v0alpha1_api::{self},
-    },
+    apis::{configuration::Configuration as KratosConfiguration, v0alpha2_api},
     models::Session,
 };
 
@@ -71,7 +68,7 @@ where
 
         let svc = Rc::clone(&self.service);
         Box::pin(async move {
-            let sess = v0alpha1_api::to_session(&configuration, None, Some(cookie.as_str())).await;
+            let sess = v0alpha2_api::to_session(&configuration, None, Some(cookie.as_str())).await;
             if sess.is_ok() {
                 if sess.as_ref().unwrap().active.unwrap() {
                     svc.call(req).await

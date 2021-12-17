@@ -11,7 +11,7 @@ mod splatoon_data_helpers;
 use database::connect;
 
 use actix_files::Files;
-use actix_http::body::BoxBody;
+use actix_http::body::{BoxBody, EitherBody};
 use actix_web::{
     dev::ServiceResponse,
     guard,
@@ -210,7 +210,10 @@ fn not_found<B>(res: ServiceResponse<B>) -> Result<ErrorHandlerResponse<BoxBody>
 }
 
 // Generic error handler.
-fn get_error_response<B>(res: &ServiceResponse<B>, error: &str) -> HttpResponse<BoxBody> {
+fn get_error_response<B>(
+    res: &ServiceResponse<B>,
+    error: &str,
+) -> HttpResponse<EitherBody<BoxBody>> {
     let request = res.request();
 
     // Provide a fallback to a simple plain text response in case an error occurs during the
@@ -219,6 +222,7 @@ fn get_error_response<B>(res: &ServiceResponse<B>, error: &str) -> HttpResponse<
         HttpResponse::build(res.status())
             .content_type("text/plain")
             .body(e.to_string())
+            .map_into_left_body()
     };
 
     let hb = request
@@ -236,7 +240,8 @@ fn get_error_response<B>(res: &ServiceResponse<B>, error: &str) -> HttpResponse<
             match body {
                 Ok(body) => HttpResponse::build(res.status())
                     .content_type("text/html")
-                    .body(body),
+                    .body(body)
+                    .map_into_left_body(),
                 Err(_) => fallback(error),
             }
         }
