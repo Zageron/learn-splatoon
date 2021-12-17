@@ -24,7 +24,6 @@ use handlebars::Handlebars;
 use mongodb::bson::doc;
 //use ory_kratos_client::apis::configuration::Configuration as KratosConfiguration;
 use serde::Deserialize;
-use serde_json::json;
 use std::{collections::BTreeMap, io};
 
 #[derive(Clone, Debug, Deserialize)]
