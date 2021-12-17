@@ -215,6 +215,7 @@ fn get_error_response<B>(
     error: &str,
 ) -> HttpResponse<EitherBody<BoxBody>> {
     let request = res.request();
+    let data = request.app_data::<web::Data<RootData>>().unwrap();
 
     // Provide a fallback to a simple plain text response in case an error occurs during the
     // rendering of the error page.
@@ -230,12 +231,16 @@ fn get_error_response<B>(
         .map(|t| t.get_ref());
     match hb {
         Some(hb) => {
-            let data = json!({
-                "error": error,
-                "status_code": res.status().as_str(),
-                "page": request.uri().to_string()
-            });
-            let body = hb.render("404", &data);
+            let mut merged_data: BTreeMap<&String, &String> = BTreeMap::new();
+            let error_data = btreemap! {
+                "error".to_string() => error.to_string(),
+                "status_code".to_string() =>  res.status().to_string(),
+                "page".to_string() =>  request.uri().to_string()
+            };
+            merged_data.extend(data.data.iter());
+            merged_data.extend(error_data.iter());
+
+            let body = hb.render("partials/404", &merged_data);
 
             match body {
                 Ok(body) => HttpResponse::build(res.status())
