@@ -135,9 +135,9 @@ dependencies = [
 
 [[package]]
 name = "actix-service"
-version = "2.0.1"
+version = "2.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8d3dc6a618b082974a08d7a4781d24d4691cba51500059bfebe6656a61ebfe1e"
+checksum = "3b894941f818cfdc7ccc4b9e60fa7e53b5042a2e8567270f9147d5591893373a"
 dependencies = [
  "futures-core",
  "paste",
@@ -1048,9 +1048,9 @@ dependencies = [
 
 [[package]]
 name = "local-waker"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "84f9a2d3e27ce99ce2c3aad0b09b1a7b916293ea9b2bf624c13fe646fadd8da4"
+checksum = "902eb695eb0591864543cbfbf6d742510642a605a61fc5e97fe6ceb5a30ac4fb"
 
 [[package]]
 name = "lock_api"
