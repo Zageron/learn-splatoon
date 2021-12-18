@@ -26,6 +26,28 @@
             "label": "rust: cargo build release"
         },
         {
+            "label": "Upgrade Dependencies",
+            "type": "shell",
+            "isBackground": false,
+            "command": [
+                "cargo",
+                "upgrade",
+                "--allow-prerelease",
+                ";;",
+                "cargo",
+                "update"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new",
+                "showReuseMessage": false,
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Ory Proxy",
             "type": "shell",
             "isBackground": true,
@@ -47,9 +69,6 @@
                 "--sdk-url",
                 "https://gallant-leakey-n498g2rdpa.projects.oryapis.com"
             ],
-            // This task is run before some debug tasks.
-            // Problem is, it's a watch script, and since it never exits, VSCode
-            // complains. All this is needed so VSCode just lets it run.
             "problemMatcher": [
                 {
                     "pattern": [
@@ -63,7 +82,7 @@
                     "background": {
                         "activeOnStart": true,
                         "beginsPattern": ".",
-                        "endsPattern": ".",
+                        "endsPattern": "."
                     }
                 }
             ]
