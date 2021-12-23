@@ -57,11 +57,11 @@ async fn study(_hb: web::Data<Handlebars<'_>>) -> HttpResponse {
 
 async fn study_entry(_hb: web::Data<Handlebars<'_>>, info: web::Path<Info>) -> HttpResponse {
     println!("Entry {:?}", info.entry_id);
-    HttpResponse::Ok().body(format!("{:?}", info))
+    HttpResponse::Ok().body(format!("GET: {:?}", info))
 }
 
 async fn study_submit(_hb: web::Data<Handlebars<'_>>, info: web::Path<Info>) -> HttpResponse {
-    HttpResponse::Ok().body(format!("{:?}", info))
+    HttpResponse::Ok().body(format!("POST: {:?}", info))
 }
 
 async fn learning_entry(
