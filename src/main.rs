@@ -130,7 +130,7 @@ async fn main() -> io::Result<()> {
     let _route =
         std::env::var("ROUTE").expect("Route is not set and is inferred to be unnecessary.");
     let _base_url = std::env::var("BASE_URL");
-    assert_eq!(_base_url.is_err(), false);
+    assert!(_base_url.is_ok());
 
     let connection_result = connect().await;
     let connection_success = connection_result.is_ok();
