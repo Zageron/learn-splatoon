@@ -24,4 +24,3 @@ WORKDIR /app
 COPY --from=builder /app/target/release/learn-splatoon /usr/local/bin/
 COPY /templates/ /app/templates
 COPY /data/ /app/data
-ENTRYPOINT ["learn-splatoon"]
