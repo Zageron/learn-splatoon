@@ -127,6 +127,10 @@ async fn main() -> io::Result<()> {
     println!("This app accurate as of Splatoon 2 v{}.", version.version());
 
     let _base_path = std::env::var("ORY_SDK_URL").expect("ORY_SDK_URL is not set.");
+    let _route =
+        std::env::var("ROUTE").expect("Route is not set and is inferred to be unnecessary.");
+    let _base_url = std::env::var("BASE_URL");
+    assert_eq!(_base_url.is_err(), false);
 
     let connection_result = connect().await;
     let connection_success = connection_result.is_ok();
@@ -136,8 +140,9 @@ async fn main() -> io::Result<()> {
         data: btreemap! {
             "title".to_string() => "Learn - Splatoon Callouts".to_string(),
             "author".to_string() => "Zageron".to_string(),
-            "url".to_string() => "https://www.zageron.com/learn/splatoon".to_string(),
+            "url".to_string() => _base_url.unwrap(),
             "description".to_string() => "A Spaced Repetition site for memorizing Splatoon 2 callouts.".to_string(),
+            "route".to_string() => _route,
             "parent".to_string() => "root".to_string()
         },
     };
