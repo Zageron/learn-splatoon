@@ -11,7 +11,15 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "label": "rust: cargo build"
+            "label": "rust: cargo build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new",
+                "showReuseMessage": false,
+                "clear": true,
+            },
         },
         {
             "type": "cargo",
@@ -23,7 +31,15 @@
                 "$rustc"
             ],
             "group": "build",
-            "label": "rust: cargo build release"
+            "label": "rust: cargo build release",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new",
+                "showReuseMessage": false,
+                "clear": true,
+            },
         },
         {
             "label": "Upgrade Dependencies",
@@ -43,7 +59,8 @@
                 "focus": true,
                 "panel": "new",
                 "showReuseMessage": false,
-                "clear": true
+                "clear": true,
+                "close": true,
             },
             "problemMatcher": []
         },
@@ -59,9 +76,9 @@
                 "echo": true,
                 "reveal": "silent",
                 "focus": false,
-                "panel": "shared",
+                "panel": "new",
                 "showReuseMessage": false,
-                "clear": false
+                "clear": true
             },
             "args": [
                 "proxy",
