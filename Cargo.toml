@@ -21,7 +21,7 @@ maplit = "1.0.2"
 mime = "0.3.16"
 mongodb = "2.1.0"
 ory-kratos-client = "0.8.2-alpha.1"
-pin-project = "1.0.8"
+pin-project = "1.0.9"
 rand = "0.8.4"
 serde = { version = "1.0.132", features = ["derive"] }
 serde_json = "1.0.73"
