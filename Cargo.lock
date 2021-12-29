@@ -1027,7 +1027,6 @@ dependencies = [
  "actix-files",
  "actix-http",
  "actix-service",
- "actix-utils",
  "actix-web",
  "anyhow",
  "dotenv",
@@ -1039,8 +1038,6 @@ dependencies = [
  "mime",
  "mongodb",
  "ory-kratos-client",
- "pin-project",
- "rand",
  "serde",
  "serde_json",
 ]
@@ -1412,26 +1409,6 @@ dependencies = [
  "maplit",
  "pest",
  "sha-1 0.8.2",
-]
-
-[[package]]
-name = "pin-project"
-version = "1.0.9"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1622113ce508488160cff04e6abc60960e676d330e1ca0f77c0b8df17c81438f"
-dependencies = [
- "pin-project-internal",
-]
-
-[[package]]
-name = "pin-project-internal"
-version = "1.0.9"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b95af56fee93df76d721d356ac1ca41fccf168bc448eb14049234df764ba3e76"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
 ]
 
 [[package]]
