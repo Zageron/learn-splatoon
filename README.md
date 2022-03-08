@@ -8,7 +8,7 @@
 [![Mozilla HTTP Observatory Grade](https://img.shields.io/mozilla-observatory/grade/learnsplatoon.zageron.com?publish&style=flat-square)](https://observatory.mozilla.org/analyze/learnsplatoon.zageron.com)
 [![Security Headers](https://img.shields.io/security-headers?style=flat-square&url=https%3A%2F%2Fsecurityheaders.com%2F%3Fq%3Dlearnsplatoon.zageron.com)](https://securityheaders.com/?q=learnsplatoon.zageron.com)
 
-[![discord](https://img.shields.io/discord/921110926751584346?label=discord&color=7289DA&logo=discord&logoColor=white&style=flat-square)](https://discord.com/invite/g4uHt46U)
+[![discord](https://img.shields.io/discord/921110926751584346?label=discord&color=7289DA&logo=discord&logoColor=white&style=flat-square)](https://discord.gg/Je3yyqnSDN)
 
 :x: __Note: This repository and project is incomplete and not functional yet, you wont find much other than data.__
 
