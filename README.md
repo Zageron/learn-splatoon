@@ -44,7 +44,7 @@ ory proxy "http://localhost" --sdk-url "https://gallant-leakey-n498g2rdpa.projec
 
 ```bash
 docker build -t learn-splatoon .
-docker run -p 8081:8081 --env-file .env -ti learn-splatoon
+docker run -p 8081:8081 --env-file .env -ti learn-splatoon learn-splatoon
 ```
 
 ## Github Action Testing

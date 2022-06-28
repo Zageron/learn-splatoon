@@ -126,9 +126,12 @@ async fn main() -> io::Result<()> {
     let version = splatoon_data_helpers::read_version("./data/splatoon/version.json").unwrap();
     println!("This app accurate as of Splatoon 2 v{}.", version.version());
 
-    let _base_path = std::env::var("ORY_SDK_URL").expect("ORY_SDK_URL is not set.");
-    let _route =
-        std::env::var("ROUTE").expect("Route is not set and is inferred to be unnecessary.");
+    let _base_path = std::env::var("ORY_PROJECT_SLUG").expect("ORY_PROJECT_SLUG is not set.");
+    let _route = match std::env::var("ROUTE") {
+        Ok(route) => route,
+        Err(_e) => "/".to_string(),
+    };
+    
     let _base_url = std::env::var("BASE_URL");
     assert!(_base_url.is_ok());
 

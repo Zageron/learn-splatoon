@@ -83,8 +83,7 @@
             "args": [
                 "proxy",
                 "http://localhost",
-                "--sdk-url",
-                "https://gallant-leakey-n498g2rdpa.projects.oryapis.com"
+                "--dev",
             ],
             "problemMatcher": [
                 {
